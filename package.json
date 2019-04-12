@@ -1,0 +1,38 @@
+{
+  "name": "trierdechets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:GemN/TrierDechets.git",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "google-map-react": "^1.1.4",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^8.0.4",
+    "next-i18next": "^0.37.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0"
+  },
+  "scripts": {
+    "dev": "node index.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node index.js",
+    "lint": "eslint pages src"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.96.0",
+    "prettier": "^1.16.4"
+  }
+}
