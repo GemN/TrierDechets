@@ -9,6 +9,9 @@ export const Container = styled.div`
 export const MyLocation = styled.div`
   width: 16px;
   height: 16px;
-  background-color: blue;
   border-radius: 50%;
+  & i {
+    font-size: 20px;
+    color: ${'#32ff6d'};
+  }
 `;

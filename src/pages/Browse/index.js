@@ -88,7 +88,9 @@ class Browse extends React.PureComponent {
             defaultZoom={this.props.zoom}
           >
             {currentLatLng && (
-              <MyLocation lat={currentLatLng.lat} lng={currentLatLng.lng} />
+              <MyLocation lat={currentLatLng.lat} lng={currentLatLng.lng}>
+                <i className="fas fa-male" />
+              </MyLocation>
             )}
             {trashs &&
               trashs.map((trash, index) => (

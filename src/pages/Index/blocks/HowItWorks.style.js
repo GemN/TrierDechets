@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import { green2 } from '../../../constants/general';
+import media from '../../../constants/media';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-top: 80px;
+  ${media.phone`
+    margin-top: 40px;
+    flex-direction: column;
+  `}
 `;
 export const Element = styled.div`
   display: flex;
@@ -15,6 +21,13 @@ export const Element = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  ${media.tablet`
+    margin-bottom: 64px;
+    width: 50%;
+  `}
+  ${media.phone`
+    width: 100%;
+  `}
 `;
 export const Title = styled.div`
   margin-top: 32px;
@@ -32,6 +45,9 @@ export const Image = styled.img`
 export const ContainerHiw = styled.div`
   padding: 80px 64px 128px 64px;
   text-align: center;
+  ${media.phone`
+     padding: 40px 16px 64px 16px;
+  `}
 `;
 
 export const TitleHiw = styled.h2`
