@@ -15,6 +15,8 @@ type Props = {
   $hover: Boolean,
   trash: {},
   t: Function,
+  isActive: boolean,
+  onClick: Function,
 };
 
 const trashTypes = {
@@ -33,7 +35,7 @@ const trashTypes = {
 };
 
 const Trash = (props: Props) => {
-  const { trash, $hover, t } = props;
+  const { trash, $hover, t, onClick, isActive } = props;
   const {
     wastetype_designation: type,
     fillingrate,
@@ -41,8 +43,8 @@ const Trash = (props: Props) => {
   } = trash.fields;
   const trashObj = trashTypes[type] || trashTypes.CB;
   return (
-    <Container>
-      {$hover && (
+    <Container onClick={() => onClick(trash.recordid)}>
+      {($hover || isActive) && (
         <Infos>
           <ContainerTrashType>
             <TrashIcon color={trashObj.color}>

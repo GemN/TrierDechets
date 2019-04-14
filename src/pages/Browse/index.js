@@ -1,7 +1,6 @@
 import React from 'react';
 import GoogleMap from 'google-map-react';
 import fetch from 'isomorphic-unfetch';
-import supercluster from 'points-cluster';
 import Chance from 'chance';
 
 import Layout from '../../components/Layout';
@@ -18,6 +17,7 @@ class Browse extends React.PureComponent {
       lng: 0,
     },
     favs: false,
+    active: null,
   };
 
   static defaultProps = {
@@ -72,15 +72,9 @@ class Browse extends React.PureComponent {
 
   showAll = () => this.setState({ favs: false });
 
-  getClusters = markers => {
-    const clusters = supercluster(markers, {
-      minZoom: 0,
-      maxZoom: 13,
-      radius: 60,
-    });
-
-    const { center, zoom } = this.props;
-    return clusters({ center, zoom });
+  onClickTrash = trashId => {
+    console.log(trashId);
+    this.setState({ active: trashId });
   };
 
   getGeoLocation = () => {
@@ -125,7 +119,7 @@ class Browse extends React.PureComponent {
 
   render() {
     const { t, user } = this.props;
-    const { currentLatLng, favs } = this.state;
+    const { currentLatLng, favs, active } = this.state;
 
     const showTrashs = this.filterTrashs();
 
@@ -145,6 +139,8 @@ class Browse extends React.PureComponent {
             {showTrashs &&
               showTrashs.map(trash => (
                 <Trash
+                  isActive={trash.recordid === active}
+                  onClick={this.onClickTrash}
                   key={`${trash.recordid}`}
                   lat={trash.lat}
                   lng={trash.lng}
