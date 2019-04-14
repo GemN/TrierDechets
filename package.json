@@ -6,6 +6,9 @@
   "license": "MIT",
   "dependencies": {
     "apollo-boost": "^0.3.1",
+    "apollo-link-context": "^1.0.17",
+    "apollo-link-http": "^1.5.14",
+    "chance": "^1.0.18",
     "express": "^4.16.4",
     "google-map-react": "^1.1.4",
     "graphql": "^14.2.1",
@@ -13,6 +16,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.4",
     "next-i18next": "^0.37.0",
+    "points-cluster": "^0.1.4",
     "react": "^16.8.6",
     "react-animations": "^1.0.0",
     "react-apollo": "^2.5.4",

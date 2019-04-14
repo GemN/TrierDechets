@@ -20,3 +20,13 @@ functions:
     schema: src/loggedInUser.graphql
     handler:
       code: src/loggedInUser.ts
+
+permissions:
+  - operation: User.read
+    authenticated: true
+    query: ./src/permissions/User.graphql:read
+    fields:
+      - createdAt
+      - email
+      - id
+      - favTrashs

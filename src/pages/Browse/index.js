@@ -1,6 +1,8 @@
 import React from 'react';
 import GoogleMap from 'google-map-react';
 import fetch from 'isomorphic-unfetch';
+import supercluster from 'points-cluster';
+import Chance from 'chance';
 
 import Layout from '../../components/Layout';
 import { withNamespaces } from '../../../i18n';
@@ -29,9 +31,16 @@ class Browse extends React.PureComponent {
     const data = await res.json();
 
     const { records } = data;
+    const chance = new Chance();
+    const mappedRecords = records.map(r => ({
+      ...r,
+      lat: r.fields.geo[0] + chance.floating(({ min: -0.000100, max: 0.000100, fixed: 6 })),
+      lng: r.fields.geo[1] + chance.floating(({ min: -0.000100, max: 0.000100, fixed: 6 })),
+    }));
+
     return {
       namespacesRequired: ['browse', 'header'],
-      trashs: records,
+      trashs: mappedRecords,
     };
   }
 
@@ -50,6 +59,17 @@ class Browse extends React.PureComponent {
     this.mounted = false;
     clearInterval(this.intervalLocation);
   }
+
+  getClusters = (markers) => {
+    const clusters = supercluster(markers, {
+      minZoom: 0,
+      maxZoom: 13,
+      radius: 60,
+    });
+
+    const { center, zoom } = this.props;
+    return clusters({ center, zoom });
+  };
 
   getGeoLocation = () => {
     if (!this.mounted) {
@@ -78,7 +98,6 @@ class Browse extends React.PureComponent {
   render() {
     const { t, trashs } = this.props;
     const { currentLatLng } = this.state;
-
     return (
       <Layout title={t('search')}>
         <Container>
@@ -96,8 +115,8 @@ class Browse extends React.PureComponent {
               trashs.map((trash, index) => (
                 <Trash
                   key={`${trash.recordId}${index}`}
-                  lat={trash.fields.geo[0]}
-                  lng={trash.fields.geo[1]}
+                  lat={trash.lat}
+                  lng={trash.lng}
                   trash={trash}
                 />
               ))}

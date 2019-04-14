@@ -13,9 +13,9 @@ import {
 import Card from '../../components/UI/Card';
 import H1 from '../../components/UI/H1';
 import Button from '../../components/UI/Button';
-import { SIGN_UP_USER } from '../../constants/graphql/mutation/user';
+import { AUTH_USER } from '../../constants/graphql/mutation/user';
 
-class Register extends React.PureComponent {
+class Login extends React.PureComponent {
   state = {
     email: '',
     password: '',
@@ -25,7 +25,7 @@ class Register extends React.PureComponent {
 
   static async getInitialProps() {
     return {
-      namespacesRequired: ['register'],
+      namespacesRequired: ['login'],
     };
   }
 
@@ -46,11 +46,12 @@ class Register extends React.PureComponent {
       this.setState({ loading: true });
       const res = await signUpUser({ variables });
       this.setState({ loading: false });
-      const { token } = res.data.signupUser;
+      const { token } = res.data.authenticateUser;
       localStorage.setItem('token', token);
       window.location.href = '/browse';
     } catch (e) {
-      this.setState({ error: 'An error occured during signup' });
+      console.error(e);
+      this.setState({ error: 'An error occured during Log-In' });
     }
   };
 
@@ -62,21 +63,21 @@ class Register extends React.PureComponent {
     const { error, loading } = this.state;
     const { t } = this.props;
     return (
-      <Layout title={t('register-title')}>
+      <Layout title={t('login-title')}>
         <Container>
           <Card width={400}>
             <Content>
-              <H1>{t('register-page-title')}</H1>
+              <H1>{t('login-page-title')}</H1>
               <Inputs>
                 <ContainerInput>
-                  <Label>{t('register-email')}</Label>
+                  <Label>{t('login-email')}</Label>
                   <Input
                     placeholder="myemail@gmail.com"
                     onChange={this.onChangeEmail}
                   />
                 </ContainerInput>
                 <ContainerInput>
-                  <Label>{t('register-password')}</Label>
+                  <Label>{t('login-password')}</Label>
                   <Input
                     placeholder="*******"
                     type="password"
@@ -84,7 +85,7 @@ class Register extends React.PureComponent {
                   />
                 </ContainerInput>
               </Inputs>
-              <Mutation mutation={SIGN_UP_USER}>
+              <Mutation mutation={AUTH_USER}>
                 {signUpUser => (
                   <Button
                     disabled={loading}
@@ -103,4 +104,4 @@ class Register extends React.PureComponent {
   }
 }
 
-export default withNamespaces('register')(Register);
+export default withNamespaces('login')(Login);

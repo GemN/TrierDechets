@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { green1 } from '../../../constants/general';
 
 export const Container = styled.div`
   width: 16px;
@@ -28,4 +29,26 @@ export const Infos = styled.div`
   border: 1px solid #f5f5f5;
   border-radius: 4px;
   font-size: 12px;
+`;
+
+export const ContainerTrashType = styled.div`
+  line-height: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Address = styled.div`
+  padding-top: 4px;
+  margin-top: 4px;
+  border-top: 1px solid #cecece;
+`;
+
+export const Fill = styled.div``;
+export const FillLabel = styled.span`
+  margin-right: 8px;
+`;
+
+export const Type = styled.div`
+  margin-left: 10px;
 `;

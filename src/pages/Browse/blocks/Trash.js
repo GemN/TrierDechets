@@ -1,5 +1,14 @@
 import React from 'react';
-import { Container, TrashIcon, Infos } from './Trash.style';
+import {
+  Container,
+  TrashIcon,
+  Infos,
+  ContainerTrashType,
+  Address,
+  Type,
+  Fill,
+  FillLabel,
+} from './Trash.style';
 import { withNamespaces } from '../../../../i18n';
 
 type Props = {
@@ -18,7 +27,7 @@ const trashTypes = {
     color: '#696969',
   },
   CB: {
-    label: 'All',
+    label: 'CB',
     color: '#7A4F66',
   },
 };
@@ -35,17 +44,17 @@ const Trash = (props: Props) => {
     <Container>
       {$hover && (
         <Infos>
-          <div>
+          <ContainerTrashType>
             <TrashIcon color={trashObj.color}>
               <i className="fas fa-trash" />
             </TrashIcon>
-            <span>{t(trashObj.label)}</span>
-          </div>
-          <div>{address}</div>
-          <div>
-            Remplissage:
+            <Type>{t(trashObj.label)}</Type>
+          </ContainerTrashType>
+          <Fill>
+            <FillLabel>{t('fill')}:</FillLabel>
             {fillingrate}%
-          </div>
+          </Fill>
+          <Address>{address}</Address>
         </Infos>
       )}
       <TrashIcon color={trashObj.color}>

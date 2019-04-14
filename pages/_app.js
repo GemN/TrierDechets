@@ -1,19 +1,19 @@
 import App, { Container } from 'next/app';
 import ApolloProvider from 'react-apollo/ApolloProvider';
 import { appWithTranslation } from '../i18n';
-import client from '../src/constants/apollo';
+import withApolloClient from '../src/lib/withApolloClient';
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
     return (
-      <ApolloProvider client={client}>
-        <Container>
+      <Container>
+        <ApolloProvider client={apolloClient}>
           <Component {...pageProps} />
-        </Container>
-      </ApolloProvider>
+        </ApolloProvider>
+      </Container>
     );
   }
 }
 
-export default appWithTranslation(MyApp);
+export default withApolloClient(appWithTranslation(MyApp));
