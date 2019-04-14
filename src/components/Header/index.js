@@ -2,9 +2,18 @@ import React, { Fragment } from 'react';
 import Link from 'next/link';
 import { Query } from 'react-apollo';
 import { withNamespaces } from '../../../i18n';
-import { Container, NavLink, ContainerLinks, Logo, Burger } from './style';
+import {
+  Container,
+  NavLink,
+  ContainerLinks,
+  Logo,
+  Burger,
+  Email,
+} from './style';
 import MobileNav from './blocks/MobileNav';
 import { CONNECTED_USER } from '../../constants/graphql/query/user';
+import Dropdown from '../Dropdown';
+import Logout from '../Logout';
 
 class Header extends React.PureComponent {
   state = {
@@ -50,7 +59,11 @@ class Header extends React.PureComponent {
                   );
                 }
                 const { email } = data.user;
-                return <span>{email}</span>;
+                return (
+                  <Dropdown title={<Email>{email}</Email>}>
+                    <Logout />
+                  </Dropdown>
+                );
               }}
             </Query>
           </ContainerLinks>

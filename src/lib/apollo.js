@@ -22,8 +22,8 @@ function create(initialState, opts) {
 
   const httpLink = createHttpLink({
     uri:
-      process.env.SERV_API_LINK ||
-      'https://api.graph.cool/simple/v1/cjugt1nc605zf01048jg0dh6m',
+      process.env.SERV_API_LINK
+      || 'https://api.graph.cool/simple/v1/cjugt1nc605zf01048jg0dh6m',
     credentials: 'same-origin',
   });
 

@@ -22,6 +22,9 @@ export const NavLink = styled.a`
 `;
 
 export const ContainerLinks = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   ${media.phone`
     display: none;
   `}
@@ -56,4 +59,10 @@ export const Burger = styled.div`
       color: ${green1};
     }
   }
+`;
+
+export const Email = styled.span`
+  font-style: italic;
+  font-size: 13px;
+  line-height: 50px;
 `;

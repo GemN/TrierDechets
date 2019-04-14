@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'cookie';
 import { Mutation } from 'react-apollo';
 import Layout from '../../components/Layout';
 import { withNamespaces } from '../../../i18n';
@@ -47,7 +48,9 @@ class Register extends React.PureComponent {
       const res = await signUpUser({ variables });
       this.setState({ loading: false });
       const { token } = res.data.signupUser;
-      localStorage.setItem('token', token);
+      document.cookie = cookie.serialize('token', token, {
+        maxAge: 30 * 24 * 60 * 60,
+      });
       window.location.href = '/browse';
     } catch (e) {
       this.setState({ error: 'An error occured during signup' });

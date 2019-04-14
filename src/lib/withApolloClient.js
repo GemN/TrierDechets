@@ -1,23 +1,47 @@
 import React from 'react';
-import Head from 'next/head';
+import cookie from 'cookie';
 import { getDataFromTree } from 'react-apollo';
-import initApollo from '../constants/apollo';
+import Head from 'next/head';
 
-export default App => {
-  return class Apollo extends React.Component {
-    static displayName = 'withApollo(App)';
+import initApollo from './apollo';
+
+function parseCookies(req, options = {}) {
+  return cookie.parse(
+    req ? req.headers.cookie || '' : document.cookie,
+    options,
+  );
+}
+
+export default App =>
+  class WithData extends React.Component {
+    static displayName = `WithData(${App.displayName})`;
+
     static async getInitialProps(ctx) {
-      const { Component, router } = ctx;
+      const {
+        Component,
+        router,
+        ctx: { req, res },
+      } = ctx;
+      const apollo = initApollo(
+        {},
+        {
+          getToken: () => parseCookies(req).token,
+        },
+      );
+
+      ctx.ctx.apolloClient = apollo;
 
       let appProps = {};
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx);
       }
 
-      const apollo = initApollo();
+      if (res && res.finished) {
+        return {};
+      }
+
       if (!process.browser) {
         try {
-          // Run all GraphQL queries
           await getDataFromTree(
             <App
               {...appProps}
@@ -43,11 +67,7 @@ export default App => {
     constructor(props) {
       super(props);
       this.apolloClient = initApollo(props.apolloState, {
-        getToken: () => {
-          const token = localStorage.getItem('token');
-          console.log(token);
-          return token;
-        },
+        getToken: () => parseCookies().token,
       });
     }
 
@@ -55,4 +75,3 @@ export default App => {
       return <App {...this.props} apolloClient={this.apolloClient} />;
     }
   };
-};

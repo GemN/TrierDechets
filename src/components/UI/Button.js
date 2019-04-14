@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { green1, green2 } from '../../constants/general';
 
 export default styled.button`
-  background: ${p =>
-    p.disabled ? 'gray' : `linear-gradient(to right, ${green1}, ${green2})`};
+  background: ${p => (p.disabled ? 'gray' : `linear-gradient(to right, ${green1}, ${green2})`)};
   transition: 0.2s all ease-in;
   border: 0;
   font-size: 13px;

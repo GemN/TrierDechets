@@ -76,7 +76,7 @@ class Browse extends React.PureComponent {
       return;
     }
     if (typeof navigator !== 'undefined' && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.setState(prevState => ({
           currentLatLng: {
             ...prevState.currentLatLng,
@@ -111,8 +111,8 @@ class Browse extends React.PureComponent {
                 <i className="fas fa-male" />
               </MyLocation>
             )}
-            {trashs &&
-              trashs.map((trash, index) => (
+            {trashs
+              && trashs.map((trash, index) => (
                 <Trash
                   key={`${trash.recordId}${index}`}
                   lat={trash.lat}

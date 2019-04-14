@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'cookie';
 import { Mutation } from 'react-apollo';
 import Layout from '../../components/Layout';
 import { withNamespaces } from '../../../i18n';
@@ -45,9 +46,11 @@ class Login extends React.PureComponent {
     try {
       this.setState({ loading: true });
       const res = await signUpUser({ variables });
-      this.setState({ loading: false });
       const { token } = res.data.authenticateUser;
-      localStorage.setItem('token', token);
+      document.cookie = cookie.serialize('token', token, {
+        maxAge: 30 * 24 * 60 * 60,
+      });
+      this.setState({ loading: false });
       window.location.href = '/browse';
     } catch (e) {
       console.error(e);
