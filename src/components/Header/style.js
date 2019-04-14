@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import media from '../../constants/media';
+import { green1 } from '../../constants/general';
 
 export const Container = styled.div`
   //  background: linear-gradient(to right, #56ab2f, #a8e063);
@@ -35,5 +36,23 @@ export const Logo = styled.div`
     font-family: 'Bungee', cursive;
     font-size: 25px;
     line-height: 50px;
+  }
+`;
+
+export const Burger = styled.div`
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  ${media.phone`
+    display: flex;
+  `}
+  & i {
+    cursor: pointer;
+    transition: 0.2s all ease-in;
+    &:hover {
+      color: ${green1};
+    }
   }
 `;
