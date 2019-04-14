@@ -15,3 +15,5 @@ export const Container = styled.div`
     border-bottom: 2px dotted white;
   }
 `;
+
+export const A = styled.a``;

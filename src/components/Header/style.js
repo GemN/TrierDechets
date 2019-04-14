@@ -8,6 +8,7 @@ export const Container = styled.div`
   line-height: 50px;
   display: flex;
   flex-direction: row;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 `;
 
 export const NavLink = styled.a`

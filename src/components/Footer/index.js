@@ -1,9 +1,9 @@
-import { Container } from './style';
+import { Container, A } from './style';
 
 const Footer = () => (
   <Container>
     Developped by{' '}
-    <a href="https://www.linkedin.com/in/geoffrey-merran/">Geoffrey Merran</a>
+    <A href="https://www.linkedin.com/in/geoffrey-merran/">Geoffrey Merran</A>
   </Container>
 );
 

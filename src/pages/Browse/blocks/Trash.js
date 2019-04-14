@@ -42,7 +42,10 @@ const Trash = (props: Props) => {
             <span>{t(trashObj.label)}</span>
           </div>
           <div>{address}</div>
-          <div>Remplissage: {fillingrate}%</div>
+          <div>
+            Remplissage:
+            {fillingrate}%
+          </div>
         </Infos>
       )}
       <TrashIcon color={trashObj.color}>

@@ -27,6 +27,7 @@
     "react/destructuring-assignment": 0,
     "import/named": 0,
     "object-curly-newline": 0,
+    "react/no-array-index-key": 0
   },
   "settings": {
     "flowtype": {
