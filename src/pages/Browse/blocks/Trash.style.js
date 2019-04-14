@@ -51,3 +51,9 @@ export const FillLabel = styled.span`
 export const Type = styled.div`
   margin-left: 10px;
 `;
+
+export const FavIcon = styled.div`
+  flex: 1;
+  text-align: right;
+  padding-right: 8px;
+`;

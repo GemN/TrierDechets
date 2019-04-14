@@ -8,6 +8,7 @@ import {
   Type,
   Fill,
   FillLabel,
+  FavIcon,
 } from './Trash.style';
 import { withNamespaces } from '../../../../i18n';
 
@@ -35,7 +36,7 @@ const trashTypes = {
 };
 
 const Trash = (props: Props) => {
-  const { trash, $hover, t, onClick, isActive } = props;
+  const { trash, $hover, t, onClick, isActive, isFav } = props;
   const {
     wastetype_designation: type,
     fillingrate,
@@ -51,6 +52,13 @@ const Trash = (props: Props) => {
               <i className="fas fa-trash" />
             </TrashIcon>
             <Type>{t(trashObj.label)}</Type>
+            <FavIcon>
+              {isFav ? (
+                <i className="fas fa-heart" />
+              ) : (
+                <i className="far fa-heart" />
+              )}
+            </FavIcon>
           </ContainerTrashType>
           <Fill>
             <FillLabel>{t('fill')}:</FillLabel>

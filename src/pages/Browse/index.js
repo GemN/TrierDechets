@@ -139,6 +139,11 @@ class Browse extends React.PureComponent {
             {showTrashs &&
               showTrashs.map(trash => (
                 <Trash
+                  isFav={
+                    user &&
+                    user.favTrashs &&
+                    user.favTrashs.indexOf(trash.recordid) > -1
+                  }
                   isActive={trash.recordid === active}
                   onClick={this.onClickTrash}
                   key={`${trash.recordid}`}
