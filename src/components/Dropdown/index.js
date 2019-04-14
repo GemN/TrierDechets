@@ -8,8 +8,10 @@ class Dropdown extends React.PureComponent {
     showDropdown: false,
   };
 
-  toggleDropdown = () =>
-    this.setState({ showDropdown: !this.state.showDropdown });
+  toggleDropdown = () => {
+    const { showDropdown } = this.state;
+    this.setState({ showDropdown: !showDropdown });
+  };
 
   props: {
     children: any,

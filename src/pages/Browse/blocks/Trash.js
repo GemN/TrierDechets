@@ -51,12 +51,8 @@ const Trash = (props: Props) => {
             <Type>{t(trashObj.label)}</Type>
           </ContainerTrashType>
           <Fill>
-            <FillLabel>
-              {t('fill')}
-:
-            </FillLabel>
-            {fillingrate}
-%
+            <FillLabel>{t('fill')}:</FillLabel>
+            {fillingrate}%
           </Fill>
           <Address>{address}</Address>
         </Infos>

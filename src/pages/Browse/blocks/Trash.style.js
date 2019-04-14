@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { green1 } from '../../../constants/general';
 
 export const Container = styled.div`
   width: 16px;

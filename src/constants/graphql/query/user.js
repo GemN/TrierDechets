@@ -8,3 +8,12 @@ export const CONNECTED_USER = gql`
     }
   }
 `;
+
+export const USER_TRASHS = gql`
+  query {
+    user {
+      id
+      favTrashs
+    }
+  }
+`;

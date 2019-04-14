@@ -71,6 +71,10 @@ export default App =>
       });
     }
 
+    props: {
+      apolloState: Function,
+    };
+
     render() {
       return <App {...this.props} apolloClient={this.apolloClient} />;
     }

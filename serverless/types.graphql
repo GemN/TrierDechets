@@ -6,5 +6,5 @@ type User @model {
 
   email: String! @isUnique
   password: String!
-  favTrashs: [String!]
+  favTrashs: [String!]! @defaultValue(value: "[]")
 }

@@ -7,8 +7,9 @@ import Chance from 'chance';
 import Layout from '../../components/Layout';
 import { withNamespaces } from '../../../i18n';
 import { API_TRASHS, GMAP_API } from '../../constants/general';
-import { Container, MyLocation } from './style';
+import { Container, MyLocation, Buttons, ToggleButton } from './style';
 import Trash from './blocks/Trash';
+import getTrashs from '../../lib/getTrashs';
 
 class Browse extends React.PureComponent {
   state = {
@@ -16,6 +17,7 @@ class Browse extends React.PureComponent {
       lat: 0,
       lng: 0,
     },
+    favs: false,
   };
 
   static defaultProps = {
@@ -26,19 +28,25 @@ class Browse extends React.PureComponent {
     zoom: 13,
   };
 
-  static async getInitialProps() {
+  static async getInitialProps(context) {
     const res = await fetch(API_TRASHS);
     const data = await res.json();
 
+    const { user } = await getTrashs(context.apolloClient);
     const { records } = data;
     const chance = new Chance();
     const mappedRecords = records.map(r => ({
       ...r,
-      lat: r.fields.geo[0] + chance.floating(({ min: -0.000100, max: 0.000100, fixed: 6 })),
-      lng: r.fields.geo[1] + chance.floating(({ min: -0.000100, max: 0.000100, fixed: 6 })),
+      lat:
+        r.fields.geo[0] +
+        chance.floating({ min: -0.0001, max: 0.0001, fixed: 6 }),
+      lng:
+        r.fields.geo[1] +
+        chance.floating({ min: -0.0001, max: 0.0001, fixed: 6 }),
     }));
 
     return {
+      user,
       namespacesRequired: ['browse', 'header'],
       trashs: mappedRecords,
     };
@@ -60,7 +68,11 @@ class Browse extends React.PureComponent {
     clearInterval(this.intervalLocation);
   }
 
-  getClusters = (markers) => {
+  showFavs = () => this.setState({ favs: true });
+
+  showAll = () => this.setState({ favs: false });
+
+  getClusters = markers => {
     const clusters = supercluster(markers, {
       minZoom: 0,
       maxZoom: 13,
@@ -76,7 +88,7 @@ class Browse extends React.PureComponent {
       return;
     }
     if (typeof navigator !== 'undefined' && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(position => {
         this.setState(prevState => ({
           currentLatLng: {
             ...prevState.currentLatLng,
@@ -88,16 +100,35 @@ class Browse extends React.PureComponent {
     }
   };
 
+  filterTrashs = () => {
+    const { trashs } = this.props;
+    const { favs } = this.state;
+    if (favs) {
+      const { favTrashs } = this.props.user;
+      const filteredTrashs = trashs.filter(
+        t => favTrashs.indexOf(t.recordid) !== -1,
+      );
+      return filteredTrashs;
+    }
+    return trashs;
+  };
+
   props: {
     t: Function,
     center?: {},
+    user: {
+      favTrashs: [],
+    },
     zoom?: number,
     trashs: [],
   };
 
   render() {
-    const { t, trashs } = this.props;
-    const { currentLatLng } = this.state;
+    const { t, user } = this.props;
+    const { currentLatLng, favs } = this.state;
+
+    const showTrashs = this.filterTrashs();
+
     return (
       <Layout title={t('search')}>
         <Container>
@@ -111,16 +142,26 @@ class Browse extends React.PureComponent {
                 <i className="fas fa-male" />
               </MyLocation>
             )}
-            {trashs
-              && trashs.map((trash, index) => (
+            {showTrashs &&
+              showTrashs.map(trash => (
                 <Trash
-                  key={`${trash.recordId}${index}`}
+                  key={`${trash.recordid}`}
                   lat={trash.lat}
                   lng={trash.lng}
                   trash={trash}
                 />
               ))}
           </GoogleMap>
+          {user && (
+            <Buttons>
+              <ToggleButton active={!favs} onClick={this.showAll}>
+                {t('all')}
+              </ToggleButton>
+              <ToggleButton active={favs} onClick={this.showFavs}>
+                {t('favs')}
+              </ToggleButton>
+            </Buttons>
+          )}
         </Container>
       </Layout>
     );
